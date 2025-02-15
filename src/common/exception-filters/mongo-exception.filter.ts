@@ -59,7 +59,7 @@ export const MongoErrors = {
     error: 'Conflict',
     messageByField: (field: string): string => {
       const messages = MongoExceptionErrors[11000].messages;
-      return messages[field] || messages.default;
+      return (messages[field] as string) || messages.default;
     },
   },
 };

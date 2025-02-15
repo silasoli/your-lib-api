@@ -4,7 +4,6 @@ import { UsersService } from './services/users.service';
 import { Users, UsersSchema } from './schemas/user.entity';
 import { MongooseModule } from '@nestjs/mongoose';
 
-
 @Global()
 @Module({
   imports: [

@@ -75,5 +75,4 @@ export class UsersService {
 
     return user.roles;
   }
-
 }
