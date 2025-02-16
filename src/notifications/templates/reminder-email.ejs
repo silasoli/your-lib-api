@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lembrete de Devolução</title>
+</head>
+<body>
+    <h2>Olá, <%= context.userName %>!</h2>
+    <p>Este é um lembrete amigável de que o livro <strong><%= context.bookTitle %></strong> precisa ser devolvido até <strong><%= context.dueDate %></strong>.</p>
+    <p>Por favor, garanta a devolução dentro do prazo para evitar multas.</p>
+    <p>Se já devolveu o livro, desconsidere esta mensagem.</p>
+    <br>
+    <p>Atenciosamente,</p>
+    <p><strong>Equipe da Biblioteca</strong></p>
+</body>
+</html>

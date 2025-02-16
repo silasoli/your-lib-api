@@ -7,6 +7,7 @@ import { AuthModule } from './auth/auth.module';
 import { AuthorsModule } from './authors/authors.module';
 import { RolesModule } from './roles/roles.module';
 import { GenresModule } from './genres/genres.module';
+import { NotificationsModule } from './notifications/notifications.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { GenresModule } from './genres/genres.module';
     UsersModule,
     AuthorsModule,
     GenresModule,
+    NotificationsModule,
   ],
   controllers: [AppController],
 })

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notificação de Livro em Atraso</title>
+</head>
+<body>
+    <h2>Prezado(a) <%= context.userName %>,</h2>
+    <p>O livro <strong><%= context.bookTitle %></strong> deveria ter sido devolvido no dia <strong><%= context.dueDate %></strong> e encontra-se em atraso.</p>
+    <p>Pedimos que regularize a situação o mais breve possível para evitar penalidades adicionais.</p>
+    <p>Caso tenha alguma dúvida, entre em contato com a administração.</p>
+    <br>
+    <p>Atenciosamente,</p>
+    <p><strong>Equipe da Biblioteca</strong></p>
+</body>
+</html>
