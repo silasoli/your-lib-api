@@ -8,6 +8,7 @@ import { AuthorsModule } from './authors/authors.module';
 import { RolesModule } from './roles/roles.module';
 import { GenresModule } from './genres/genres.module';
 import { NotificationsModule } from './notifications/notifications.module';
+import { BooksModule } from './books/books.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { NotificationsModule } from './notifications/notifications.module';
     AuthorsModule,
     GenresModule,
     NotificationsModule,
+    BooksModule,
   ],
   controllers: [AppController],
 })

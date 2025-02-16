@@ -15,7 +15,7 @@ export class GenreResponseDto {
   userId?: string;
 
   constructor(data: Genres) {
-    this._id = String(data._id);
+    this._id = String(data._id as string);
     this.name = data.name;
     this.description = data.description;
     this.userId = data.userId;
