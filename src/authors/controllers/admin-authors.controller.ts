@@ -5,9 +5,7 @@ import {
   Body,
   Patch,
   Param,
-  Delete,
   UseGuards,
-  HttpCode,
 } from '@nestjs/common';
 import {
   ApiBearerAuth,
@@ -15,7 +13,6 @@ import {
   ApiOperation,
   ApiCreatedResponse,
   ApiOkResponse,
-  ApiNoContentResponse,
 } from '@nestjs/swagger';
 import { AuthUserJwtGuard } from '../../auth/guards/auth-user-jwt.guard';
 import { Roles } from '../../roles/enums/role.enum';
@@ -67,11 +64,11 @@ export class AdminAuthorsController {
     return this.adminAuthorsService.update(params.id, dto);
   }
 
-//   @ApiOperation({ summary: 'Deletar um autor global' })
-//   @ApiNoContentResponse({ description: 'Autor deletado com sucesso' })
-//   @HttpCode(204)
-//   @Delete(':id')
-//   async remove(@Param() params: IDMongoQueryDTO) {
-//     return this.adminAuthorsService.remove(params.id);
-//   }
+  //   @ApiOperation({ summary: 'Deletar um autor global' })
+  //   @ApiNoContentResponse({ description: 'Autor deletado com sucesso' })
+  //   @HttpCode(204)
+  //   @Delete(':id')
+  //   async remove(@Param() params: IDMongoQueryDTO) {
+  //     return this.adminAuthorsService.remove(params.id);
+  //   }
 }
