@@ -6,6 +6,7 @@ import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { AuthorsModule } from './authors/authors.module';
 import { RolesModule } from './roles/roles.module';
+import { GenresModule } from './genres/genres.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { RolesModule } from './roles/roles.module';
     RolesModule,
     UsersModule,
     AuthorsModule,
+    GenresModule,
   ],
   controllers: [AppController],
 })
