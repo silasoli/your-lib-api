@@ -26,11 +26,15 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { IDMongoQueryDTO } from '../../common/dto/id-mongo-query.dto';
+import { Role } from '../../roles/decorators/roles.decorator';
+import { Roles } from '../../roles/enums/role.enum';
+import { RoleGuard } from '../../roles/guards/role.guard';
 
 @ApiBearerAuth()
-@ApiTags('Users')
-@Controller('users')
-@UseGuards(AuthUserJwtGuard)
+@ApiTags('Users - Admin')
+@Controller('admin/users')
+@UseGuards(AuthUserJwtGuard, RoleGuard)
+@Role([Roles.ADMIN])
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
