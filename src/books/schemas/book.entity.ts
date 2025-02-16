@@ -34,3 +34,35 @@ export class Books {
 }
 
 export const BooksSchema = SchemaFactory.createForClass(Books);
+
+BooksSchema.pre(
+  'deleteOne',
+  { document: true, query: false },
+  async function (next) {
+    try {
+      await mongoose
+        .model('Book')
+        .updateMany({ genres: this._id }, { $pull: { genres: this._id } });
+      next();
+    } catch (err) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+      next(err);
+    }
+  },
+);
+
+BooksSchema.pre(
+  'deleteOne',
+  { document: true, query: false },
+  async function (next) {
+    try {
+      await mongoose
+        .model('Book')
+        .updateMany({ authors: this._id }, { $pull: { authors: this._id } });
+      next();
+    } catch (err) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+      next(err);
+    }
+  },
+);
