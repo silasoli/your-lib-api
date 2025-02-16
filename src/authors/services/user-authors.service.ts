@@ -24,7 +24,15 @@ export class UserAuthorsService {
     userId: string,
     dto: CreateAuthorDto,
   ): Promise<AuthorResponseDto> {
+    const exists = await this.authorsModel.findOne({
+      name: { $regex: `^${dto.name}$`, $options: 'i' },
+      $or: [{ userId: null }, { userId }],
+    });
+
+    if (exists) throw AUTHORS_ERRORS.DUPLICATE_NAME;
+
     const created = await this.authorsModel.create({ ...dto, userId });
+
     return new AuthorResponseDto(created);
   }
 
@@ -47,6 +55,17 @@ export class UserAuthorsService {
     dto: UpdateAuthorDto,
   ): Promise<AuthorResponseDto> {
     await this.findByID(_id, userId);
+
+    if (dto.name) {
+      const exists = await this.authorsModel.findOne({
+        name: { $regex: `^${dto.name}$`, $options: 'i' },
+        $or: [{ userId: null }, { userId }],
+        _id: { $ne: _id },
+      });
+
+      if (exists) throw AUTHORS_ERRORS.DUPLICATE_NAME;
+    }
+
     await this.authorsModel.updateOne({ _id }, dto);
     return this.findOne(_id, userId);
   }

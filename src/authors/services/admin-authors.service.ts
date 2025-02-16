@@ -23,6 +23,13 @@ export class AdminAuthorsService {
   }
 
   public async create(dto: CreateAuthorDto): Promise<AuthorResponseDto> {
+    const exists = await this.authorsModel.findOne({
+      name: { $regex: `^${dto.name}$`, $options: 'i' },
+      userId: null,
+    });
+
+    if (exists) throw AUTHORS_ERRORS.DUPLICATE_NAME;
+
     const created = await this.authorsModel.create({ ...dto, userId: null });
 
     return new AuthorResponseDto(created);
@@ -45,6 +52,16 @@ export class AdminAuthorsService {
     dto: UpdateAuthorDto,
   ): Promise<AuthorResponseDto> {
     await this.findByID(_id);
+
+    if (dto.name) {
+      const exists = await this.authorsModel.findOne({
+        name: { $regex: `^${dto.name}$`, $options: 'i' },
+        userId: null,
+        _id: { $ne: _id },
+      });
+
+      if (exists) throw AUTHORS_ERRORS.DUPLICATE_NAME;
+    }
 
     await this.authorsModel.updateOne({ _id }, dto);
 

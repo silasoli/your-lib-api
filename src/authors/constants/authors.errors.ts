@@ -1,4 +1,8 @@
-import { NotFoundException, ForbiddenException } from '@nestjs/common';
+import {
+  NotFoundException,
+  ForbiddenException,
+  ConflictException,
+} from '@nestjs/common';
 
 export const AUTHORS_ERRORS = {
   NOT_FOUND: new NotFoundException({
@@ -14,5 +18,9 @@ export const AUTHORS_ERRORS = {
   FORBIDDEN_DELETE: new ForbiddenException({
     id: 'AES-003',
     message: 'Você não tem permissão para deletar este autor',
+  }),
+  DUPLICATE_NAME: new ConflictException({
+    id: 'AES-004',
+    message: 'Já existe um autor com este nome',
   }),
 };
