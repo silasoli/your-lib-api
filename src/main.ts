@@ -9,7 +9,6 @@ import { MongoExceptionFilter } from './common/exception-filters/mongo-exception
 // import { SWAGGER_CUSTOM_CSS } from './common/utils/swagger/swagger-dark';
 import { SwaggerTheme, SwaggerThemeNameEnum } from 'swagger-themes';
 
-
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
@@ -36,7 +35,6 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
 
   const theme = new SwaggerTheme();
-
 
   SwaggerModule.setup('docs', app, document, {
     swaggerOptions: {
