@@ -1,3 +1,4 @@
+/* eslint-disable */
 export const SWAGGER_CUSTOM_CSS = `@media only screen and (prefers-color-scheme: dark) {
 
     a { color: #8c8cfa; }
