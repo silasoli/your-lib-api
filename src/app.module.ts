@@ -9,6 +9,7 @@ import { RolesModule } from './roles/roles.module';
 import { GenresModule } from './genres/genres.module';
 import { NotificationsModule } from './notifications/notifications.module';
 import { BooksModule } from './books/books.module';
+import { LoansModule } from './loans/loans.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { BooksModule } from './books/books.module';
     GenresModule,
     NotificationsModule,
     BooksModule,
+    LoansModule,
   ],
   controllers: [AppController],
 })
