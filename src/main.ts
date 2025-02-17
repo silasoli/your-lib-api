@@ -36,7 +36,8 @@ async function bootstrap() {
     swaggerOptions: {
       persistAuthorization: true,
       tagsSorter: 'alpha',
-      operationsSorter: '',
+      operationsSorter: 'alpha',
+      filter: true, 
     },
     customCssUrl:
       'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.18.0/swagger-ui.min.css',
@@ -44,6 +45,7 @@ async function bootstrap() {
       'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.18.0/swagger-ui-bundle.js',
       'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.18.0/swagger-ui-standalone-preset.js',
     ],
+    customSiteTitle: 'Your Lib API Docs',
   });
 
   const port = configService.get<number>('PORT');
