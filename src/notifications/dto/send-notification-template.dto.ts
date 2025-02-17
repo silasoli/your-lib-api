@@ -19,15 +19,15 @@ export class SendNotificationTemplateDto {
   @IsNotEmpty()
   title: string;
 
-  @ApiProperty()
-  @IsString()
-  @IsNotEmpty()
-  template: string;
+  // @ApiProperty()
+  // @IsString()
+  // @IsNotEmpty()
+  // template: string;
 
-  @ApiProperty()
-  @IsObject()
-  @IsNotEmpty()
-  variables: Record<string, any>;
+  // @ApiProperty()
+  // @IsObject()
+  // @IsNotEmpty()
+  // variables: Record<string, any>;
 
   @ApiProperty()
   @IsArray()

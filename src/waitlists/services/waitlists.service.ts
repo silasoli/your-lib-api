@@ -7,6 +7,7 @@ import { WaitlistResponseDto } from '../dto/waitlist-response.dto';
 import { Books, BooksDocument } from '../../books/schemas/book.entity';
 import { Waitlists, WaitlistsDocument } from '../schemas/waitlist.entity';
 import { WAITLIST_ERRORS } from '../constants/genres.errors';
+import { NotificationsService } from '../../notifications/services/notifications.service';
 
 @Injectable()
 export class WaitlistsService {
@@ -15,6 +16,7 @@ export class WaitlistsService {
     private readonly waitlistModel: Model<WaitlistsDocument>,
     @InjectModel(Books.name)
     private readonly booksModel: Model<BooksDocument>,
+    private readonly notificationsService: NotificationsService,
   ) {}
 
   private async getNextPosition(bookId: string): Promise<number> {
@@ -43,6 +45,16 @@ export class WaitlistsService {
       position,
       userId,
     });
+
+    await this.notificationsService.sendEmailWithTemplate(
+      {
+        emailAddress: dto.borrowerEmail,
+        title: 'Confirmação de Entrada na Fila',
+      },
+      { userName: dto.borrowerName, bookTitle: dto.bookId, position },
+      'waitlist-confirmation',
+    );
+
     return new WaitlistResponseDto(created);
   }
 
@@ -64,12 +76,23 @@ export class WaitlistsService {
     await this.waitlistModel.updateOne({ _id, userId }, dto);
     const updated = await this.waitlistModel.findOne({ _id, userId });
     if (!updated) throw WAITLIST_ERRORS.NOT_FOUND;
+
+    await this.notificationsService.sendEmailWithTemplate(
+      {
+        emailAddress: updated.borrowerEmail,
+        title: 'Atualização na Fila de Espera',
+      },
+      { userName: updated.borrowerName, bookTitle: updated.bookId },
+      'waitlist-update',
+    );
+
     return new WaitlistResponseDto(updated);
   }
 
   public async remove(_id: string, userId: string): Promise<void> {
     const session: ClientSession = await this.waitlistModel.startSession();
     session.startTransaction();
+    //enviar email em massa para usuarios com sua nova posicao
 
     try {
       const removedEntry = await this.waitlistModel.findOneAndDelete(
@@ -80,6 +103,15 @@ export class WaitlistsService {
 
       await this.recalculatePositions(removedEntry.bookId, session);
       await session.commitTransaction();
+
+      await this.notificationsService.sendEmailWithTemplate(
+        {
+          emailAddress: removedEntry.borrowerEmail,
+          title: 'Remoção da Fila de Espera',
+        },
+        { userName: removedEntry.borrowerName, bookTitle: removedEntry.bookId },
+        'waitlist-removed',
+      );
     } catch (error) {
       await session.abortTransaction();
       throw error;
