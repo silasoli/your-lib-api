@@ -6,7 +6,7 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { SERVER_ERRORS } from './common/constants/server.errors';
 import { AllExceptionsFilter } from './common/exception-filters/http-exception.filter';
 import { MongoExceptionFilter } from './common/exception-filters/mongo-exception.filter';
-import { SWAGGER_CUSTOM_CSS } from './common/utils/swagger/swagger-dark';
+// import { SWAGGER_CUSTOM_CSS } from './common/utils/swagger/swagger-dark';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -40,9 +40,14 @@ async function bootstrap() {
       operationsSorter: 'alpha',
       filter: true,
     },
-    customCss: SWAGGER_CUSTOM_CSS,
     // customCssUrl:
     //   'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.18.0/swagger-ui.min.css',
+    customCssUrl: [
+      'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.18.0/swagger-ui.min.css',
+      'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.18.5/swagger-ui-standalone-preset.min.css',
+      'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.18.5/swagger-ui.css',
+    ],
+    // customCss: SWAGGER_CUSTOM_CSS,
     customJs: [
       'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.18.0/swagger-ui-bundle.js',
       'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.18.0/swagger-ui-standalone-preset.js',
