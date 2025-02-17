@@ -6,6 +6,7 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { SERVER_ERRORS } from './common/constants/server.errors';
 import { AllExceptionsFilter } from './common/exception-filters/http-exception.filter';
 import { MongoExceptionFilter } from './common/exception-filters/mongo-exception.filter';
+import { SWAGGER_CUSTOM_CSS } from './common/utils/swagger/swagger-dark';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -32,20 +33,25 @@ async function bootstrap() {
 
   const document = SwaggerModule.createDocument(app, config);
 
+
+
+
   SwaggerModule.setup('docs', app, document, {
     swaggerOptions: {
       persistAuthorization: true,
       tagsSorter: 'alpha',
       operationsSorter: 'alpha',
-      filter: true, 
+      filter: true,
     },
-    customCssUrl:
-      'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.18.0/swagger-ui.min.css',
+    customCss: SWAGGER_CUSTOM_CSS,
+    // customCssUrl:
+    //   'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.18.0/swagger-ui.min.css',
     customJs: [
       'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.18.0/swagger-ui-bundle.js',
       'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.18.0/swagger-ui-standalone-preset.js',
     ],
-    customSiteTitle: 'Your Lib API Docs',
+    customfavIcon: 'https://yourdomain.com/favicon.ico',
+    customSiteTitle: 'Your Lib API Docs - Dark Mode',
   });
 
   const port = configService.get<number>('PORT');
