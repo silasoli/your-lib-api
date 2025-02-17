@@ -10,6 +10,7 @@ import { GenresModule } from './genres/genres.module';
 import { NotificationsModule } from './notifications/notifications.module';
 import { BooksModule } from './books/books.module';
 import { LoansModule } from './loans/loans.module';
+import { WaitlistsModule } from './waitlists/waitlists.module';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { LoansModule } from './loans/loans.module';
     NotificationsModule,
     BooksModule,
     LoansModule,
+    WaitlistsModule,
   ],
   controllers: [AppController],
 })
