@@ -36,12 +36,21 @@ export class UserGenresService {
   }
 
   public async findUserGenres(userId: string): Promise<GenreResponseDto[]> {
-    const genres = await this.genresModel.find({ userId });
+    const genres = await this.genresModel.find({
+      $or: [{ userId }, { userId: null }],
+    });
+
     return genres.map((genre) => new GenreResponseDto(genre));
   }
 
   public async findOne(_id: string, userId: string): Promise<GenreResponseDto> {
-    const genre = await this.findByID(_id, userId);
+    const genre = await this.genresModel.findOne({
+      _id,
+      $or: [{ userId }, { userId: null }],
+    });
+  
+    if (!genre) throw GENRES_ERRORS.NOT_FOUND;
+  
     return new GenreResponseDto(genre);
   }
 

@@ -32,12 +32,14 @@ export class UserAuthorsService {
     if (exists) throw AUTHORS_ERRORS.DUPLICATE_NAME;
 
     const created = await this.authorsModel.create({ ...dto, userId });
-
     return new AuthorResponseDto(created);
   }
 
   public async findUserAuthors(userId: string): Promise<AuthorResponseDto[]> {
-    const authors = await this.authorsModel.find({ userId });
+    const authors = await this.authorsModel.find({
+      $or: [{ userId }, { userId: null }],
+    });
+
     return authors.map((item) => new AuthorResponseDto(item));
   }
 
@@ -45,7 +47,13 @@ export class UserAuthorsService {
     _id: string,
     userId: string,
   ): Promise<AuthorResponseDto> {
-    const author = await this.findByID(_id, userId);
+    const author = await this.authorsModel.findOne({
+      _id,
+      $or: [{ userId }, { userId: null }],
+    });
+
+    if (!author) throw AUTHORS_ERRORS.NOT_FOUND;
+
     return new AuthorResponseDto(author);
   }
 
