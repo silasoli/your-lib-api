@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEnum, IsNotEmpty, IsDate, IsOptional } from 'class-validator';
+import { IsEnum, IsNotEmpty, IsDateString, IsOptional } from 'class-validator';
 import { BookCondition } from '../../books/enums/book.enum';
 import { LoanStatus } from '../enums/loan.enum';
 
@@ -18,7 +18,7 @@ export class UpdateLoanDto {
     description: 'Data de devolução',
     required: false,
   })
-  @IsDate()
+  @IsDateString()
   @IsOptional()
   returnDate?: Date;
 

@@ -12,7 +12,7 @@ export class CreateAuthorDto {
   bio?: string;
 
   //   @IsOptional()
-  //   @IsDate()
+  //   @IsDateString()
   //   birthDate?: Date;
 
   //   @IsOptional()

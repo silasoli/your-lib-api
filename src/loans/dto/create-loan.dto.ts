@@ -3,7 +3,7 @@ import {
   IsNotEmpty,
   IsOptional,
   IsEnum,
-  IsDate,
+  IsDateString,
   IsString,
   IsEmail,
 } from 'class-validator';
@@ -34,7 +34,7 @@ export class CreateLoanDto {
     example: '2024-02-16T12:00:00Z',
     description: 'Data do empréstimo',
   })
-  @IsDate()
+  @IsDateString()
   @IsNotEmpty()
   loanDate: Date;
 
@@ -42,7 +42,7 @@ export class CreateLoanDto {
     example: '2024-03-16T12:00:00Z',
     description: 'Prazo de devolução',
   })
-  @IsDate()
+  @IsDateString()
   @IsNotEmpty()
   dueDate: Date;
 
