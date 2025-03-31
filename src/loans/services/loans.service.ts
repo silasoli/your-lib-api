@@ -8,6 +8,7 @@ import { UpdateLoanDto } from '../dto/update-loan.dto';
 import { LoanStatus } from '../enums/loan.enum';
 import { Loans, LoansDocument } from '../schemas/loan.entity';
 import { LOANS_ERRORS } from '../constants/loans.errors';
+import { BookStatus } from '../../books/enums/book.enum';
 
 @Injectable()
 export class LoansService {
@@ -23,18 +24,45 @@ export class LoansService {
     if (!book) throw LOANS_ERRORS.BOOK_NOT_OWNED_BY_USER;
   }
 
+  // public async create(
+  //   userId: string,
+  //   dto: CreateLoanDto,
+  // ): Promise<LoanResponseDto> {
+  //   await this.validateBookOwnership(dto.book, userId);
+  //   const existingLoan = await this.loanModel.findOne({
+  //     book: dto.book,
+  //     status: LoanStatus.BORROWED,
+  //   });
+  //   if (existingLoan) throw LOANS_ERRORS.BOOK_ALREADY_BORROWED;
+
+  //   const loan = await this.loanModel.create({ ...dto, user: userId });
+  //   return new LoanResponseDto(loan);
+  //   //adicionar update na tabela de livros para quando um loan for criado tornar esse livro com status emprestado
+  // }
+
   public async create(
     userId: string,
     dto: CreateLoanDto,
   ): Promise<LoanResponseDto> {
     await this.validateBookOwnership(dto.book, userId);
+
     const existingLoan = await this.loanModel.findOne({
       book: dto.book,
       status: LoanStatus.BORROWED,
     });
+
     if (existingLoan) throw LOANS_ERRORS.BOOK_ALREADY_BORROWED;
 
     const loan = await this.loanModel.create({ ...dto, user: userId });
+
+    // Atualiza o status do livro para emprestado
+    await this.booksModel.findOneAndUpdate(
+      { _id: dto.book },
+      {
+        status: BookStatus.BORROWED,
+      },
+    );
+
     return new LoanResponseDto(loan);
   }
 
