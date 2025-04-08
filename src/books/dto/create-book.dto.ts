@@ -7,7 +7,7 @@ import {
   IsArray,
 } from 'class-validator';
 import { Types } from 'mongoose';
-import { BookCondition, BookStatus } from '../enums/book.enum';
+import { BookCondition } from '../enums/book.enum';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateBookDto {
@@ -42,14 +42,14 @@ export class CreateBookDto {
   @IsOptional()
   genres?: Types.ObjectId[];
 
-  @ApiProperty({
-    example: 'available',
-    enum: BookStatus,
-    description: 'Status do livro',
-  })
-  @IsEnum(BookStatus)
-  @IsNotEmpty()
-  status: BookStatus;
+  // @ApiProperty({
+  //   example: 'available',
+  //   enum: BookStatus,
+  //   description: 'Status do livro',
+  // })
+  // @IsEnum(BookStatus)
+  // @IsNotEmpty()
+  // status: BookStatus;
 
   @ApiProperty({
     example: 'good',

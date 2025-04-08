@@ -20,8 +20,8 @@ export class Books {
   @Prop({ type: [{ type: Types.ObjectId, ref: 'Genre' }], required: false })
   genres: Types.ObjectId[];
 
-  @Prop({ enum: BookStatus, required: true })
-  status: string;
+  @Prop({ enum: BookStatus, required: true, default: BookStatus.AVAILABLE })
+  status?: string;
 
   @Prop({ required: true })
   userId: string;

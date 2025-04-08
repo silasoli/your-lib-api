@@ -88,12 +88,30 @@ export class LoansService {
     return new LoanResponseDto(loan);
   }
 
+  // public async update(
+  //   id: string,
+  //   userId: string,
+  //   dto: UpdateLoanDto,
+  // ): Promise<LoanResponseDto> {
+  //   await this.findOne(id, userId);
+  //   const rawData = { ...dto };
+
+  //   if (dto.status === LoanStatus.RETURNED) {
+  //     rawData.returnDate = new Date();
+  //   }
+
+  //   await this.loanModel.updateOne({ _id: id, user: userId }, rawData);
+  //   return this.findOne(id, userId);
+  // }
+
+
+
   public async update(
     id: string,
     userId: string,
     dto: UpdateLoanDto,
   ): Promise<LoanResponseDto> {
-    await this.findOne(id, userId);
+    const loan = await this.findOne(id, userId);
     const rawData = { ...dto };
 
     if (dto.status === LoanStatus.RETURNED) {
@@ -101,6 +119,16 @@ export class LoansService {
     }
 
     await this.loanModel.updateOne({ _id: id, user: userId }, rawData);
+
+    if (dto.status === LoanStatus.RETURNED) {
+      // Atualiza o status do livro para disponível
+      await this.booksModel.findOneAndUpdate(
+        { _id: loan.book },
+        {
+          status: BookStatus.AVAILABLE,
+        },
+      );
+    }
     return this.findOne(id, userId);
   }
 
